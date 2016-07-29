@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  app:
+    container_name: "app"
+    image: tutum/hello-world
+  monit:
+    container_name: "monit"
+    build: .
+    ports:
+      - "2812:2812"
+    volumes:
+     - ./global.conf:/etc/monit/conf.d/global.conf
+     - ./app.conf:/etc/monit/conf.d/app.conf
+     - /tmp/ggt/:/tmp/docker/
