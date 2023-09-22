@@ -1,16 +1,7 @@
-FROM debian:stable-slim
-LABEL maintainer="Jean-Avit Promis docker@katagena.com"
+# hadolint ignore=DL3007
+FROM lscr.io/linuxserver-labs/monit:latest
 
-RUN apt-get update && \
-	DEBIAN_FRONTEND=noninteractive apt-get -yq --no-install-recommends install \
-		monit=* \
-		rsync=* \
-		openssl=* \
-		ca-certificates=* && \
-	chmod 600 /etc/monit/monitrc && \
-	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+COPY check.sh /check.sh
+RUN chmod +x /check.sh
 
-EXPOSE 2812
-
-CMD ["monit", "-Ic", "/etc/monit/monitrc"]
-
+HEALTHCHECK CMD /check.sh
