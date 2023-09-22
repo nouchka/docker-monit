@@ -1,4 +1,5 @@
 DOCKER_IMAGE=monit
+VERSIONS=1-debian
 
 include Makefile.docker
 
